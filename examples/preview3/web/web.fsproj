@@ -14,7 +14,7 @@
   <ItemGroup>
     <Compile Include="Controllers\*.fs" Exclude="$(GlobalExclude)" />
     <Compile Include="Startup.fs" />
-    <Compile Include="Progam.fs" />
+    <Compile Include="Program.fs" />
     <EmbeddedResource Include="**\*.resx" Exclude="$(GlobalExclude)" />
   </ItemGroup>
 

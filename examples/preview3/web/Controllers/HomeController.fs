@@ -13,12 +13,12 @@ type HomeController () =
         this.View()
 
     member this.About () =
-        ViewData.["Message"] <- "Your application description page."
+        this.ViewData.["Message"] <- "Your application description page."
         this.View()
 
     member this.Contact () =
-        ViewData.["Message"] <- "Your contact page."
+        this.ViewData.["Message"] <- "Your contact page."
         this.View()
 
-    member this.IActionResult Error () =
+    member this.Error () =
         this.View();

@@ -20,7 +20,7 @@ type Startup private () =
             ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional = true, reloadOnChange = true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional = true)
+                .AddJsonFile((sprintf "appsettings.%s.json" (env.EnvironmentName)), optional = true)
                 .AddEnvironmentVariables()
 
         this.Configuration <- builder.Build()
@@ -33,7 +33,7 @@ type Startup private () =
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     member this.Configure(app: IApplicationBuilder, env: IHostingEnvironment, loggerFactory: ILoggerFactory) =
 
-        loggerFactory.AddConsole(Configuration.GetSection("Logging")) |> ignore
+        loggerFactory.AddConsole(this.Configuration.GetSection("Logging")) |> ignore
         loggerFactory.AddDebug() |> ignore
 
         if (env.IsDevelopment()) then
@@ -49,6 +49,5 @@ type Startup private () =
                 name = "default",
                 template = "{controller=Home}/{action=Index}/{id?}") |> ignore
             ) |> ignore
-    }
 
     member val Configuration : IConfigurationRoot = null with get, set
