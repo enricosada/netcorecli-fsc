@@ -1,8 +1,11 @@
-module Tests
+namespace Tests
 
 open System
 open Microsoft.VisualStudio.TestTools.UnitTesting
 
-[<TestMethod>]
-let TestMethodPassing () =
-    Assert.IsTrue(true);
+[<TestClass>]
+type TestClass () =
+
+    [<TestMethod>]
+    member this.TestMethodPassing () =
+        Assert.IsTrue(true);
