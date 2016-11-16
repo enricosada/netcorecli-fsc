@@ -3,11 +3,7 @@
   
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <Version>1.0.0-preview3</Version>
-    <Authors>Enrico Sada</Authors>
+    <Version>1.0.0-alpha</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,17 +13,17 @@
 
   <ItemGroup>
     <PackageReference Include="NETStandard.Library">
-      <Version>1.6.0</Version>
+      <Version>1.6</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.FSharp.Core.netcore">
       <Version>1.0.0-alpha-161023</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Sdk">
-      <Version>1.0.0-alpha-20161029-1</Version>
+      <Version>1.0.0-alpha-20161104-2</Version>
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
     <PackageReference Include="FSharp.NET.Sdk">
-      <Version>1.0.0-alpha-000001</Version>
+      <Version>1.0.0-alpha-*</Version>
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
   </ItemGroup>
