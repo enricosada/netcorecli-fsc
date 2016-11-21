@@ -1,9 +1,10 @@
 
 param(
-    [string[]] $Targets = @("Build", "Tests"),
     [string] $Configuration = "Debug",
     [string] $Architecture = "x64",
-    [switch]$Help)
+    [string[]] $Targets = @("Build", "Tests"),
+    [switch] $Help,
+    [Parameter(Position=0, ValueFromRemainingArguments=$true)] $ExtraParameters )
 
 if($Help)
 {
@@ -50,33 +51,14 @@ function Using-Sdk ([string] $sdkVersion)
   Run-Cmd "dotnet" "--version"
 }
 
-function Test-Examples-Preview3
-{
-  $example = "examples\preview3\console"
-  Write-Host "# Example $example :" -foregroundcolor "magenta"
-  cd "$rootDir\$example"
-  Run-Cmd "dotnet" "restore"
-  Run-Cmd "dotnet" "-v build"
-  Run-Cmd "dotnet" "-v run"
-
-  $example = "examples\preview3\lib"
-  Write-Host "# Example $example :" -foregroundcolor "magenta"
-  cd "$rootDir\$example"
-  Run-Cmd "dotnet" "restore"
-  Run-Cmd "dotnet" "-v build"
-  Run-Cmd "dotnet" "-v pack"
-}
-
 function Do-preview3
 {
-  # dotnet info
   Install-DotnetSdk '1.0.0-preview3-004056'
 
-  Write-Host "# INFO" -foregroundcolor "magenta"
-  Run-Cmd "dotnet" "--info"
-
   Using-Sdk '1.0.0-preview3-004056'
-  Test-Examples-Preview3
+
+  dotnet msbuild build.proj /m /p:Architecture=$Architecture $ExtraParameters
+  if ($LASTEXITCODE -ne 0) { throw "Failed to build" } 
 }
 
 # main

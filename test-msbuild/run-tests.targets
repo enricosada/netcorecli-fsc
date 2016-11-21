@@ -2,7 +2,7 @@
 
     <Target Name="TestAppConsole">
         <PropertyGroup>
-            <ProjectDirectory>TestAppConsole</ProjectDirectory>
+            <ProjectDirectory>$(MSBuildThisFileDirectory)TestAppConsole</ProjectDirectory>
         </PropertyGroup>
 
         <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" /> 
@@ -18,7 +18,7 @@
 
     <Target Name="TestApp">
         <PropertyGroup>
-            <ProjectDirectory>TestApp</ProjectDirectory>
+            <ProjectDirectory>$(MSBuildThisFileDirectory)TestApp</ProjectDirectory>
         </PropertyGroup>
 
         <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" /> 
@@ -35,7 +35,7 @@
 
     <Target Name="TestAppConsoleNet451">
         <PropertyGroup>
-            <ProjectDirectory>TestAppConsoleNet451</ProjectDirectory>
+            <ProjectDirectory>$(MSBuildThisFileDirectory)TestAppConsoleNet451</ProjectDirectory>
         </PropertyGroup>
 
         <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" /> 
@@ -51,7 +51,7 @@
 
     <Target Name="TestAppConsoleCrossGen">
         <PropertyGroup>
-            <ProjectDirectory>TestAppConsoleCrossGen</ProjectDirectory>
+            <ProjectDirectory>$(MSBuildThisFileDirectory)TestAppConsoleCrossGen</ProjectDirectory>
         </PropertyGroup>
 
         <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" /> 
@@ -76,7 +76,7 @@
 
     <Target Name="TestLibrary">
         <PropertyGroup>
-            <ProjectDirectory>TestLibrary</ProjectDirectory>
+            <ProjectDirectory>$(MSBuildThisFileDirectory)TestLibrary</ProjectDirectory>
         </PropertyGroup>
 
         <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" /> 
@@ -86,7 +86,7 @@
 
     <Target Name="TestLibraryCrossGen">
         <PropertyGroup>
-            <ProjectDirectory>TestLibraryCrossGen</ProjectDirectory>
+            <ProjectDirectory>$(MSBuildThisFileDirectory)TestLibraryCrossGen</ProjectDirectory>
         </PropertyGroup>
 
         <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" /> 
@@ -101,7 +101,7 @@
         </PropertyGroup>
 
         <PropertyGroup>
-            <ProjectDirectory>..\examples\preview3\console</ProjectDirectory>
+            <ProjectDirectory>$(MSBuildThisFileDirectory)..\examples\preview3\console</ProjectDirectory>
         </PropertyGroup>
 
         <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" /> 
@@ -110,7 +110,7 @@
         <Exec Command="dotnet run" WorkingDirectory="$(ProjectDirectory)" />
 
         <PropertyGroup>
-            <ProjectDirectory>..\examples\preview3\lib</ProjectDirectory>
+            <ProjectDirectory>$(MSBuildThisFileDirectory)..\examples\preview3\lib</ProjectDirectory>
         </PropertyGroup>
 
         <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" /> 
@@ -119,7 +119,7 @@
         <Exec Command="dotnet pack" WorkingDirectory="$(ProjectDirectory)" />
 
         <PropertyGroup>
-            <ProjectDirectory>..\examples\preview3\console-crossgen</ProjectDirectory>
+            <ProjectDirectory>$(MSBuildThisFileDirectory)..\examples\preview3\console-crossgen</ProjectDirectory>
         </PropertyGroup>
 
         <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" /> 
@@ -129,7 +129,7 @@
         <Exec Command="dotnet pack /p:RuntimeIdentifier=win7-x64" WorkingDirectory="$(ProjectDirectory)" />
 
         <PropertyGroup>
-            <ProjectDirectory>..\examples\preview3\xunit</ProjectDirectory>
+            <ProjectDirectory>$(MSBuildThisFileDirectory)..\examples\preview3\xunit</ProjectDirectory>
         </PropertyGroup>
 
         <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" /> 
@@ -137,7 +137,7 @@
         <Exec Command="dotnet test" WorkingDirectory="$(ProjectDirectory)" />
 
         <PropertyGroup>
-            <ProjectDirectory>..\examples\preview3\mstest</ProjectDirectory>
+            <ProjectDirectory>$(MSBuildThisFileDirectory)..\examples\preview3\mstest</ProjectDirectory>
         </PropertyGroup>
 
         <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" /> 
@@ -145,7 +145,7 @@
         <Exec Command="dotnet test" WorkingDirectory="$(ProjectDirectory)" />
 
         <PropertyGroup>
-            <ProjectDirectory>..\examples\preview3\web</ProjectDirectory>
+            <ProjectDirectory>$(MSBuildThisFileDirectory)..\examples\preview3\web</ProjectDirectory>
         </PropertyGroup>
 
         <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" /> 
@@ -163,13 +163,13 @@
         <AllTests Include="SmokeTestExamplesPreview3" />
     </ItemGroup>
 
-    <Target Name="RunAll" DependsOnTargets="@(AllTests)" />
+    <Target Name="Test" DependsOnTargets="@(AllTests)" />
 
     <Target Name="TestSuiteInfo">
         <ItemGroup>
             <TestLI Include="@(AllTests -> '- %(Identity)%0A')" />
         </ItemGroup>
-        <Message Importance="high" Text="Use '/t:RunAll' to run all tests" />
+        <Message Importance="high" Text="Use '/t:Test' to run all tests" />
         <Message Importance="high" Text="or '/t:TestName' to run a specific test" />
         <Message Importance="high" Text="Tests avaiable:%0A @(TestLI,' ')" />
     </Target>
