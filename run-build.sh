@@ -51,7 +51,6 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 REPOROOT="$DIR"
 
 ARCHITECTURE="x64"
-source "$REPOROOT/scripts/common/_prettyprint.sh"
 
 BUILD=1
 
