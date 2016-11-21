@@ -101,7 +101,7 @@
 
         <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" />
         <Exec Command="dotnet restore" WorkingDirectory="$(ProjectDirectory)" />
-        <Exec Command="dotnet test -xml bin\testresult.xml" WorkingDirectory="$(ProjectDirectory)" />
+        <Exec Command="dotnet test" WorkingDirectory="$(ProjectDirectory)" />
     </Target>
 
     <Target Name="SmokeTestExamplesPreview3">
