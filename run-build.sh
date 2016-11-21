@@ -147,7 +147,7 @@ download $sdkInstallScriptUrl $sdkInstallScriptPath
 chmod u+x $sdkInstallScriptPath
 
 sdkVersion=1.0.0-preview3-004056
-sdkPath=.dotnetsdk\sdk-$sdkVersion
+sdkPath=.dotnetsdk/sdk-$sdkVersion
 
 DOTNET_INSTALL_DIR=$sdkPath
 
