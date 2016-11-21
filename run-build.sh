@@ -152,8 +152,8 @@ sdkPath=.dotnetsdk\sdk-$sdkVersion
 DOTNET_INSTALL_DIR=$sdkPath
 
 # now execute the script
-echo "installing CLI: $dotnetInstallPath --version \"$sdkVersion\" --install-dir $DOTNET_INSTALL_DIR --architecture \"$ARCHITECTURE\""
-$dotnetInstallPath --version "$sdkVersion" --install-dir $DOTNET_INSTALL_DIR --architecture "$ARCHITECTURE"
+echo "installing CLI: $sdkInstallScriptPath --version \"$sdkVersion\" --install-dir $DOTNET_INSTALL_DIR --architecture \"$ARCHITECTURE\""
+$sdkInstallScriptPath --version "$sdkVersion" --install-dir $DOTNET_INSTALL_DIR --architecture "$ARCHITECTURE"
 if [ $? != 0 ]; then
     echo "run-build: Error: Boot-strapping post-PJ stage0 with exit code $?." >&2
     exit $?
