@@ -94,6 +94,16 @@
         <Exec Command="dotnet pack" WorkingDirectory="$(ProjectDirectory)" />
     </Target>
 
+    <Target Name="TestXunit">
+        <PropertyGroup>
+            <ProjectDirectory>$(MSBuildThisFileDirectory)TestXunit</ProjectDirectory>
+        </PropertyGroup>
+
+        <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" />
+        <Exec Command="dotnet restore" WorkingDirectory="$(ProjectDirectory)" />
+        <Exec Command="dotnet test -xml bin\testresult.xml" WorkingDirectory="$(ProjectDirectory)" />
+    </Target>
+
     <Target Name="SmokeTestExamplesPreview3">
 
         <PropertyGroup>
@@ -160,6 +170,7 @@
         <AllTests Include="TestLibrary" />
         <AllTests Include="TestLibraryCrossGen" />
         <AllTests Include="TestAppConsoleCrossGen" />
+        <AllTests Include="TestXunit" />
         <AllTests Include="SmokeTestExamplesPreview3" />
     </ItemGroup>
 
