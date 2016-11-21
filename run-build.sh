@@ -120,12 +120,12 @@ temp="${args[@]}"
 args=($temp)
 
 # Load Branch Info
-while read line; do
-    if [[ $line != \#* ]]; then
-        IFS='=' read -ra splat <<< "$line"
-        export ${splat[0]}="${splat[1]}"
-    fi
-done < "$REPOROOT/branchinfo.txt"
+# while read line; do
+#     if [[ $line != \#* ]]; then
+#         IFS='=' read -ra splat <<< "$line"
+#         export ${splat[0]}="${splat[1]}"
+#     fi
+# done < "$REPOROOT/branchinfo.txt"
 
 # Also create an install directory for a post-PJnistic CLI 
 [ -z "$DOTNET_INSTALL_DIR" ] && export DOTNET_INSTALL_DIR=$REPOROOT/.dotnet_stage0/$ARCHITECTURE
