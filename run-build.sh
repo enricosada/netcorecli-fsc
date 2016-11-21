@@ -144,7 +144,7 @@ sdkInstallScriptUrl=https://raw.githubusercontent.com/dotnet/cli/rel/1.0.0-previ
 sdkInstallScriptPath=.dotnetsdk/dotnet_cli_install.ps1
 
 download $sdkInstallScriptUrl $sdkInstallScriptPath
-chmod u+x $dotnetInstallPath
+chmod u+x $sdkInstallScriptPath
 
 sdkVersion=1.0.0-preview3-004056
 sdkPath=.dotnetsdk\sdk-$sdkVersion
