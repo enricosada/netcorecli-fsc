@@ -24,7 +24,7 @@ function Install-DotnetSdk([string] $sdkVersion)
     $sdkInstallScriptUrl = "https://raw.githubusercontent.com/dotnet/cli/rel/1.0.0-preview3/scripts/obtain/dotnet-install.ps1"
     $sdkInstallScriptPath = ".dotnetsdk\dotnet_cli_install.ps1"
     Write-Host "Downloading sdk install script '$sdkInstallScriptUrl' to '$sdkInstallScriptPath'"
-    New-Item $rootDir ".dotnetsdk" -type directory
+    New-Item "$rootDir\.dotnetsdk" -Type directory -ErrorAction Ignore
     Invoke-WebRequest $sdkInstallScriptUrl -OutFile "$rootDir\$sdkInstallScriptPath"
 
     Write-Host "Running sdk install script..."
