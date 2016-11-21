@@ -107,15 +107,11 @@
     <Target Name="SmokeTestExamplesPreview3">
 
         <PropertyGroup>
-            <RestoreConfigFile>..\NuGet.local.Config</RestoreConfigFile>
-        </PropertyGroup>
-
-        <PropertyGroup>
             <ProjectDirectory>$(MSBuildThisFileDirectory)..\examples\preview3\console</ProjectDirectory>
         </PropertyGroup>
 
         <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" /> 
-        <Exec Command="dotnet restore --configfile $(RestoreConfigFile)" WorkingDirectory="$(ProjectDirectory)" />
+        <Exec Command="dotnet restore" WorkingDirectory="$(ProjectDirectory)" />
         <Exec Command="dotnet build" WorkingDirectory="$(ProjectDirectory)" />
         <Exec Command="dotnet run" WorkingDirectory="$(ProjectDirectory)" />
 
@@ -124,7 +120,7 @@
         </PropertyGroup>
 
         <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" /> 
-        <Exec Command="dotnet restore --configfile $(RestoreConfigFile)" WorkingDirectory="$(ProjectDirectory)" />
+        <Exec Command="dotnet restore" WorkingDirectory="$(ProjectDirectory)" />
         <Exec Command="dotnet build" WorkingDirectory="$(ProjectDirectory)" />
         <Exec Command="dotnet pack" WorkingDirectory="$(ProjectDirectory)" />
 
@@ -133,7 +129,7 @@
         </PropertyGroup>
 
         <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" /> 
-        <Exec Command="dotnet restore --configfile $(RestoreConfigFile)" WorkingDirectory="$(ProjectDirectory)" />
+        <Exec Command="dotnet restore" WorkingDirectory="$(ProjectDirectory)" />
         <Exec Command="dotnet build -r win7-x64" WorkingDirectory="$(ProjectDirectory)" />
         <Exec Command="dotnet run -f netcoreapp1.0" WorkingDirectory="$(ProjectDirectory)" />
         <Exec Command="dotnet pack /p:RuntimeIdentifier=win7-x64" WorkingDirectory="$(ProjectDirectory)" />
@@ -143,7 +139,7 @@
         </PropertyGroup>
 
         <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" /> 
-        <Exec Command="dotnet restore --configfile $(RestoreConfigFile)" WorkingDirectory="$(ProjectDirectory)" />
+        <Exec Command="dotnet restore" WorkingDirectory="$(ProjectDirectory)" />
         <Exec Command="dotnet test" WorkingDirectory="$(ProjectDirectory)" />
 
         <PropertyGroup>
@@ -151,7 +147,7 @@
         </PropertyGroup>
 
         <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" /> 
-        <Exec Command="dotnet restore --configfile $(RestoreConfigFile)" WorkingDirectory="$(ProjectDirectory)" />
+        <Exec Command="dotnet restore" WorkingDirectory="$(ProjectDirectory)" />
         <Exec Command="dotnet test" WorkingDirectory="$(ProjectDirectory)" />
 
         <PropertyGroup>
@@ -159,7 +155,7 @@
         </PropertyGroup>
 
         <RemoveDir Directories="$(ProjectDirectory)\bin; $(ProjectDirectory)\obj" /> 
-        <Exec Command="dotnet restore --configfile $(RestoreConfigFile)" WorkingDirectory="$(ProjectDirectory)" />
+        <Exec Command="dotnet restore" WorkingDirectory="$(ProjectDirectory)" />
         <Exec Command="dotnet build" WorkingDirectory="$(ProjectDirectory)" />
     </Target>
 
@@ -174,7 +170,11 @@
         <AllTests Include="SmokeTestExamplesPreview3" />
     </ItemGroup>
 
-    <Target Name="Test" DependsOnTargets="@(AllTests)" />
+    <Target Name="PrepareTests">
+        <MakeDir Directories="$(ProjectDirectory)src\FSharp.NET.Sdk\bin\Debug" />
+    </Target>
+
+    <Target Name="Test" DependsOnTargets="PrepareTests; @(AllTests)" />
 
     <Target Name="TestSuiteInfo">
         <ItemGroup>
