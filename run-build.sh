@@ -160,7 +160,7 @@ if [ $? != 0 ]; then
 fi
 
 # Put stage 0 on the PATH (for this shell only)
-PATH="$DOTNET_INSTALL_DIR:$PATH"
+export PATH="$DOTNET_INSTALL_DIR:$PATH"
 
 # Increases the file descriptors limit for this bash. It prevents an issue we were hitting during restore
 FILE_DESCRIPTOR_LIMIT=$( ulimit -n )
