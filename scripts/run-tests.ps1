@@ -29,9 +29,6 @@ function Dotnet-Run {
 }
 
 # dotnet new
-<#
-
-dotnet new doesnt work ootb in preview2
 
 Run-Test "dotnet new" {
 
@@ -41,13 +38,12 @@ Run-Test "dotnet new" {
 
   Run-Cmd "dotnet" "new --lang f#"
 
-  Run-Cmd "dotnet" "restore -f `"$rootDir\bin`""
+  Run-Cmd "dotnet" "restore"
 
   Dotnet-Build
 
   Dotnet-Run "c d"
 }
-#>
 
 # test from assets
 
@@ -92,9 +88,9 @@ function Dotnet-Restore-OnlyFallback {
   Run-Cmd "dotnet" "restore -v Information -f `"$rootDir\bin`""
 }
 
-Run-Test "examples/preview2/console" {
+Run-Test "examples/preview2.1/console" {
 
-  cd "$rootDir\examples\preview2\console"
+  cd "$rootDir\examples\preview2.1\console"
 
   Dotnet-Restore-OnlyFallback
 
@@ -103,9 +99,9 @@ Run-Test "examples/preview2/console" {
   Dotnet-Run ""
 }
 
-Run-Test "examples/preview2/lib" {
+Run-Test "examples/preview2.1/lib" {
 
-  cd "$rootDir\examples\preview2\lib"
+  cd "$rootDir\examples\preview2.1\lib"
 
   Dotnet-Restore-OnlyFallback
 
