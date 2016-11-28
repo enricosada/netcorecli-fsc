@@ -8,6 +8,10 @@ This repo contains the sources for:
 
 for .NET Core SDK preview2.
 
+| Windows x64 | Ubuntu x64 | OS X |
+|-------------|------------|------|
+| [![Build Status][win-x64-badge]][win-x64-view] | [![Build Status][ubuntu-x64-badge]][ubuntu-x64-view] | [![Build Status][osx-x64-badge]][osx-x64-view] |
+
 ## Build
 
 To build a package and run the tests:
@@ -34,3 +38,11 @@ Require .NET Core SDK preview3 ( http://github.com/dotnet/cli ), tested with `1.
 
 Example apps can be found in `examples/preview3`.
 See also `src/FSharp.Net.Sdk` and `test-msbuild` directories.
+
+
+[win-x64-badge]: https://ci2.dot.net/buildStatus/icon?job=dotnet_netcorecli-fsc/master/release_windows_nt_x64
+[win-x64-view] : https://ci2.dot.net/job/dotnet_netcorecli-fsc/job/master/job/release_windows_nt_x64/
+[ubuntu-x64-badge]: https://ci2.dot.net/buildStatus/icon?job=dotnet_netcorecli-fsc/master/release_ubuntu_x64
+[ubuntu-x64-view] : https://ci2.dot.net/job/dotnet_netcorecli-fsc/job/master/job/release_ubuntu_x64/
+[osx-x64-badge]: https://ci2.dot.net/buildStatus/icon?job=dotnet_netcorecli-fsc/master/release_osx_x64
+[osx-x64-view] : https://ci2.dot.net/job/dotnet_netcorecli-fsc/job/master/job/release_osx_x64/
