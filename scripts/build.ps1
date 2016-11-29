@@ -59,7 +59,7 @@ function Do-preview3
 
   Using-Sdk $sdkVersion
 
-  .\run-tests.ps1
+  & "$rootDir\scripts\run-tests.ps1"
   if ($LASTEXITCODE -ne 0) { throw "Failed to build" } 
 }
 
