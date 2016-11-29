@@ -15,18 +15,15 @@
       "version": "1.0.0-*",
       "target": "project"
     },
-    "Microsoft.NETCore.App": "1.0.0",
+    "Microsoft.NETCore.App": "1.1.0",
     "Microsoft.FSharp.Core.netcore": "1.0.0-alpha-*"
   },
   "frameworks": {
-    "netcoreapp1.0": {
-      "imports": "dnxcore50"
-    }
+    "netcoreapp1.1": { }
   },
   "tools": {
     "dotnet-compile-fsc": {
-      "version": "1.0.0-preview2-*",
-      "imports": "dnxcore50"
+      "version": "1.0.0-preview2.1-*"
     }
   },
   "runtimes": {

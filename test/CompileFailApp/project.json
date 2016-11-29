@@ -1,6 +1,7 @@
 {
   "version": "1.0.0-*",
   "buildOptions": {
+    "debugType": "portable",
     "emitEntryPoint": true,
     "compilerName": "fsc",
     "compile": {
@@ -15,12 +16,7 @@
   },
   "tools": {
     "dotnet-compile-fsc": {
-      "version": "1.0.0-preview2-*",
-      "imports": [
-        "dnxcore50",
-        "portable-net45+win81",
-        "netstandard1.3"
-      ]
+      "version": "1.0.0-preview2.1-*"
     }
   },
   "frameworks": {
