@@ -10,7 +10,7 @@ REPOROOT="$(dirname $DIR)/rootdir"
 
 # test helper
 
-function Run-Cmd {
+function RunCmd {
   echo "$1 $2"
   eval "$1 $2"
   if [ $? != 0 ]; then
@@ -19,90 +19,90 @@ function Run-Cmd {
   fi
 }
 
-function Dotnet-Build {
-  Run-Cmd "dotnet" "--verbose build"
+function DotnetBuild {
+  RunCmd "dotnet" "--verbose build"
 }
 
-function Dotnet-Run {
-  Run-Cmd "dotnet" "--verbose run $1"
+function DotnetRun {
+  RunCmd "dotnet" "--verbose run $1"
 }
 
-function Dotnet-Restore {
-  Run-Cmd "dotnet" 'restore -v Information --no-cache --configfile "$REPOROOT\test\NuGet.Config"' 
+function DotnetRestore {
+  RunCmd "dotnet" 'restore -v Information --no-cache --configfile "$REPOROOT\test\NuGet.Config"' 
 }
 
-function Run-Test {
+function RunTest {
   echo "Running '$1'..."
 }
 
 # dotnet new
-Run-Test "dotnet new"
+RunTest "dotnet new"
 {
   rm -rf "$REPOROOT/test/test-dotnet-new"
 
   mkdir "$REPOROOT/test/test-dotnet-new" -Force | cd
 
-  Run-Cmd "dotnet" "new --lang f#"
+  RunCmd "dotnet" "new --lang f#"
 
-  Dotnet-Restore
-  #Run-Cmd "dotnet" "restore"
+  DotnetRestore
+  #RunCmd "dotnet" "restore"
 
-  Dotnet-Build
+  DotnetBuild
 
-  Dotnet-Run "c d"
+  DotnetRun "c d"
 }
 
 # test from assets
 
-Run-Test "test/TestAppWithArgs"
+RunTest "test/TestAppWithArgs"
 {
   cd "$REPOROOT/test/TestAppWithArgs"
 
-  Dotnet-Restore
+  DotnetRestore
 
-  Dotnet-Build
+  DotnetBuild
 
-  Dotnet-Run ""
+  DotnetRun ""
 }
 
-Run-Test "test/TestLibrary"
+RunTest "test/TestLibrary"
 {
   cd "$REPOROOT/test/TestLibrary"
 
-  Dotnet-Restore
+  DotnetRestore
 
-  Dotnet-Build
+  DotnetBuild
 }
 
-Run-Test "test/TestApp"
+RunTest "test/TestApp"
 {
   cd "$REPOROOT/test/TestApp"
 
-  Dotnet-Restore
+  DotnetRestore
 
-  Dotnet-Build
+  DotnetBuild
 
-  Dotnet-Run ""
+  DotnetRun ""
 }
 
 # test templates
 
-Run-Test "examples/preview2.1/console"
+RunTest "examples/preview2.1/console"
 {
   cd "$REPOROOT/examples/preview2.1/console"
 
-  Dotnet-Restore
+  DotnetRestore
 
-  Dotnet-Build
+  DotnetBuild
 
-  Dotnet-Run ""
+  DotnetRun ""
 }
 
-Run-Test "examples/preview2.1/lib"
+RunTest "examples/preview2.1/lib"
 {
   cd "$REPOROOT/examples/preview2.1/lib"
 
-  Dotnet-Restore
+  DotnetRestore
 
-  Dotnet-Build
+  DotnetBuild
 }
