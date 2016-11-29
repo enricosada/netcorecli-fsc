@@ -28,6 +28,10 @@ function Dotnet-Run {
   Run-Cmd "dotnet" "--verbose run $Arguments"
 }
 
+function Dotnet-Restore {
+  Run-Cmd "dotnet" "restore -v Information --no-cache --configfile `"$rootDir\test\NuGet.Config`"" # -f `"$rootDir\bin`"
+}
+
 # dotnet new
 
 Run-Test "dotnet new" {
@@ -38,7 +42,8 @@ Run-Test "dotnet new" {
 
   Run-Cmd "dotnet" "new --lang f#"
 
-  Run-Cmd "dotnet" "restore"
+  Dotnet-Restore
+  #Run-Cmd "dotnet" "restore"
 
   Dotnet-Build
 
@@ -46,10 +51,6 @@ Run-Test "dotnet new" {
 }
 
 # test from assets
-
-function Dotnet-Restore {
-  Run-Cmd "dotnet" "restore -v Information --configfile `"$rootDir\test\NuGet.Config`"" # -f `"$rootDir\bin`"
-}
 
 Run-Test "test/TestAppWithArgs" {
 
@@ -92,7 +93,8 @@ Run-Test "examples/preview2.1/console" {
 
   cd "$rootDir\examples\preview2.1\console"
 
-  Dotnet-Restore-OnlyFallback
+  #Dotnet-Restore-OnlyFallback
+  Dotnet-Restore
 
   Dotnet-Build
 
@@ -103,7 +105,8 @@ Run-Test "examples/preview2.1/lib" {
 
   cd "$rootDir\examples\preview2.1\lib"
 
-  Dotnet-Restore-OnlyFallback
+  #Dotnet-Restore-OnlyFallback
+  Dotnet-Restore
 
   Dotnet-Build
 }
