@@ -15,6 +15,11 @@ namespace NetcoreCliFsc.DotNet.Tests
 {
     public class GivenThatIWantANewFSApp : TestBase
     {
+        private static string NugetConfigWithDevFeedPath 
+        {
+            get { return Path.Combine(RepoRoot, "NuGet.withDevFeed.Config"); }
+        }
+
         [Theory]
         [InlineData("console")]
         [InlineData("lib")]
@@ -27,7 +32,7 @@ namespace NetcoreCliFsc.DotNet.Tests
                 .Should().Pass();
 
             new TestCommand("dotnet") { WorkingDirectory = rootPath }
-                .Execute("-v restore --no-cache  -v Information")
+                .Execute($"-v restore --no-cache -v Information --configfile \"{NugetConfigWithDevFeedPath}\"")
                 .Should().Pass();
 
             var buildResult = new TestCommand("dotnet") { WorkingDirectory = rootPath }

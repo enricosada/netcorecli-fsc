@@ -12,6 +12,11 @@ namespace NetcoreCliFsc.DotNet.Tests
 {
     public class CommonScenario : TestBase
     {
+        private static string NugetConfigWithDevFeedPath 
+        {
+            get { return Path.Combine(RepoRoot, "NuGet.withDevFeed.Config"); }
+        }
+
         [Fact]
         public void TestAppWithArgs()
         {
@@ -20,7 +25,7 @@ namespace NetcoreCliFsc.DotNet.Tests
             TestAssets.CopyDirTo("TestAppWithArgs", rootPath);
 
             new TestCommand("dotnet") { WorkingDirectory = rootPath }
-                .Execute("-v restore --no-cache  -v Information")
+                .Execute($"-v restore --no-cache -v Information --configfile \"{NugetConfigWithDevFeedPath}\"")
                 .Should().Pass();
 
             new TestCommand("dotnet") { WorkingDirectory = rootPath }
@@ -40,7 +45,7 @@ namespace NetcoreCliFsc.DotNet.Tests
             TestAssets.CopyDirTo("TestLibrary", rootPath);
 
             new TestCommand("dotnet") { WorkingDirectory = rootPath }
-                .Execute("-v restore --no-cache  -v Information")
+                .Execute($"-v restore --no-cache -v Information --configfile \"{NugetConfigWithDevFeedPath}\"")
                 .Should().Pass();
 
             new TestCommand("dotnet") { WorkingDirectory = rootPath }
@@ -60,7 +65,7 @@ namespace NetcoreCliFsc.DotNet.Tests
             }
 
             new TestCommand("dotnet") { WorkingDirectory = rootPath }
-                .Execute("-v restore --no-cache  -v Information")
+                .Execute($"-v restore --no-cache -v Information --configfile \"{NugetConfigWithDevFeedPath}\"")
                 .Should().Pass();
 
             var appDir = Path.Combine(rootPath, "TestApp");

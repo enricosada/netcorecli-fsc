@@ -21,7 +21,7 @@ RunCmd ()
 
 cd "$REPOROOT/src/dotnet-compile-fsc"
 
-RunCmd "dotnet" 'restore -v Information --no-cache --configfile "$REPOROOT/test/NuGet.Config"' 
+RunCmd "dotnet" 'restore -v Information --no-cache --configfile "$REPOROOT/NuGet.Config"'
 
 RunCmd "dotnet" "-v pack -c Release"
 
@@ -29,7 +29,7 @@ RunCmd "dotnet" "-v pack -c Release"
 
 cd "$REPOROOT/test/"
 
-RunCmd "dotnet" 'restore -v Information --no-cache --configfile "$REPOROOT/test/NuGet.Config"'
+RunCmd "dotnet" 'restore -v Information --no-cache --configfile "$REPOROOT/NuGet.Config"'
 
 cd "$REPOROOT/test/dotnet-new.Tests"
 
