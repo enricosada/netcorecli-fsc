@@ -26,7 +26,7 @@ function DotnetRun
 
 function DotnetRestore
 {
-  RunCmd "dotnet" 'restore -v Information --no-cache --configfile "$REPOROOT/test/NuGet.Config"' 
+  RunCmd "dotnet" 'restore --no-cache --configfile "$REPOROOT/test/NuGet.Config"' 
 }
 
 function RunTest
