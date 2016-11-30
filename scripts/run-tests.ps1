@@ -1,125 +1,18 @@
-$global:testSuite = @{}
 
-# test helper
+# pack src/dotnet-compile-fsc
 
-function Run-Test {
-  Param([string] $Name, [scriptblock] $Check)
-  
-  Write-Host "## Testing $Name..."  -ForegroundColor "magenta"
-  try {
-    $Check.Invoke()
-    Write-Host "## Testing $Name [OK]"  -ForegroundColor "green"
-    $global:testSuite.Add($Name, $TRUE)
-  }
-  catch {
-    Write-Host "## Testing $Name [FAILED]"  -ForegroundColor "red"
-    Write-Host $_.Exception.Message
-    $global:testSuite.Add($Name, $FALSE)
-  }
-}
+cd "$rootDir/src/dotnet-compile-fsc"
 
-function Dotnet-Build {
-  Run-Cmd "dotnet" "--verbose build"
-}
+Run-Cmd "dotnet" "restore -v Information --no-cache --configfile `"$rootDir\test\NuGet.Config`"" 
 
-function Dotnet-Run {
-  Param([string] $Arguments)
+Run-Cmd "dotnet" "-v pack -C Release"
 
-  Run-Cmd "dotnet" "--verbose run $Arguments"
-}
+# run tests
 
-function Dotnet-Restore {
-  Run-Cmd "dotnet" "restore -v Information --no-cache --configfile `"$rootDir\test\NuGet.Config`"" # -f `"$rootDir\bin`"
-}
+cd "$rootDir/test/"
 
-# dotnet new
+Run-Cmd "dotnet" "restore -v Information --no-cache --configfile `"$rootDir\test\NuGet.Config`"" 
 
-Run-Test "dotnet new" {
+cd "$rootDir/test/dotnet-new.Tests"
 
-  Remove-Item "$rootDir\test\test-dotnet-new" -Recurse -ErrorAction Ignore
-
-  mkdir "$rootDir\test\test-dotnet-new" -Force | cd
-
-  Run-Cmd "dotnet" "new --lang f#"
-
-  Dotnet-Restore
-  #Run-Cmd "dotnet" "restore"
-
-  Dotnet-Build
-
-  Dotnet-Run "c d"
-}
-
-# test from assets
-
-Run-Test "test/TestAppWithArgs" {
-
-  cd "$rootDir\test\TestAppWithArgs"
-
-  Dotnet-Restore
-
-  Dotnet-Build
-
-  Dotnet-Run ""
-}
-
-Run-Test "test/TestLibrary" {
-
-  cd "$rootDir\test\TestLibrary"
-
-  Dotnet-Restore
-
-  Dotnet-Build
-}
-
-Run-Test "test/TestApp" {
-
-  cd "$rootDir\test\TestApp"
-
-  Dotnet-Restore
-
-  Dotnet-Build
-
-  Dotnet-Run ""
-}
-
-# test templates
-
-function Dotnet-Restore-OnlyFallback {
-  Run-Cmd "dotnet" "restore -v Information -f `"$rootDir\bin`""
-}
-
-Run-Test "examples/preview2.1/console" {
-
-  cd "$rootDir\examples\preview2.1\console"
-
-  #Dotnet-Restore-OnlyFallback
-  Dotnet-Restore
-
-  Dotnet-Build
-
-  Dotnet-Run ""
-}
-
-Run-Test "examples/preview2.1/lib" {
-
-  cd "$rootDir\examples\preview2.1\lib"
-
-  #Dotnet-Restore-OnlyFallback
-  Dotnet-Restore
-
-  Dotnet-Build
-}
-
-# results
-
-Write-Host "# Tests results"  -ForegroundColor "magenta"
-foreach ($h in $global:testSuite.GetEnumerator()) {
-    $color = If ($h.Value) {"green"} Else {"red"}
-    $text = If ($h.Value) {"PASSED"} Else {"FAILED"}
-    Write-Host "- $($h.Name): [$text]" -ForegroundColor $color
-}
-
-If ($global:testSuite.ContainsValue($FALSE)) {
-  exit 2
-}
+Run-Cmd "dotnet" "-v test"

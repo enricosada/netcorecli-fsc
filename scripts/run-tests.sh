@@ -14,95 +14,23 @@ RunCmd ()
   fi
 }
 
-DotnetBuild ()
-{
-  RunCmd "dotnet" "--verbose build"
-}
 
-DotnetRun ()
-{
-  RunCmd "dotnet" "--verbose run $1"
-}
 
-DotnetRestore ()
-{
-  RunCmd "dotnet" 'restore --no-cache --configfile "$REPOROOT/test/NuGet.Config"' 
-}
 
-RunTest ()
-{
-  echo "[TEST] '$1'..."
-}
+# pack src/dotnet-compile-fsc
 
-# dotnet new
-RunTest "dotnet new"
-{
-  rm -rf "$REPOROOT/test/test-dotnet-new"
+cd "$REPOROOT/src/dotnet-compile-fsc"
 
-  mkdir "$REPOROOT/test/test-dotnet-new"
+Run-Cmd "dotnet" 'restore -v Information --no-cache --configfile "$REPOROOT\test\NuGet.Config"' 
 
-  cd "$REPOROOT/test/test-dotnet-new"
+Run-Cmd "dotnet" "-v pack -C Release"
 
-  RunCmd "dotnet" "new --lang f#"
+# run tests
 
-  DotnetRestore
+cd "$REPOROOT/test/"
 
-  DotnetBuild
+Run-Cmd "dotnet" "restore -v Information --no-cache --configfile `"$REPOROOT/test/NuGet.Config`"" 
 
-  DotnetRun "c d"
-}
+cd "$REPOROOT/test/dotnet-new.Tests"
 
-# test from assets
-
-RunTest "test/TestAppWithArgs"
-{
-  cd "$REPOROOT/test/TestAppWithArgs"
-
-  DotnetRestore
-
-  DotnetBuild
-
-  DotnetRun ""
-}
-
-RunTest "test/TestLibrary"
-{
-  cd "$REPOROOT/test/TestLibrary"
-
-  DotnetRestore
-
-  DotnetBuild
-}
-
-RunTest "test/TestApp"
-{
-  cd "$REPOROOT/test/TestApp"
-
-  DotnetRestore
-
-  DotnetBuild
-
-  DotnetRun ""
-}
-
-# test templates
-
-RunTest "examples/preview2.1/console"
-{
-  cd "$REPOROOT/examples/preview2.1/console"
-
-  DotnetRestore
-
-  DotnetBuild
-
-  DotnetRun ""
-}
-
-RunTest "examples/preview2.1/lib"
-{
-  cd "$REPOROOT/examples/preview2.1/lib"
-
-  DotnetRestore
-
-  DotnetBuild
-}
+Run-Cmd "dotnet" "-v test"
