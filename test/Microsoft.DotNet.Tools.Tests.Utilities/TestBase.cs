@@ -51,6 +51,14 @@ namespace Microsoft.DotNet.Tools.Test.Utilities
             }
         }
 
+        protected static TestAssets TestAssets 
+        {
+            get
+            {
+                return new TestAssets(RepoRoot);
+            }
+        }
+
         protected TestBase()
         {
         }
