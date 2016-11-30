@@ -6,7 +6,7 @@ REPOROOT=$(dirname "$BASEDIR")
 
 RunCmd ()
 {
-  echo "$1 $2"
+  echo "[EXEC] $1 $2"
   eval "$1 $2"
   if [ $? != 0 ]; then
       echo "run-build: Error $?."
