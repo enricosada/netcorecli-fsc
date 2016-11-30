@@ -5,7 +5,7 @@ cd "$rootDir/src/dotnet-compile-fsc"
 
 Run-Cmd "dotnet" "restore -v Information --no-cache --configfile `"$rootDir\test\NuGet.Config`"" 
 
-Run-Cmd "dotnet" "-v pack -C Release"
+Run-Cmd "dotnet" "-v pack -c Release"
 
 # run tests
 

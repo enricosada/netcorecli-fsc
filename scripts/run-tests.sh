@@ -23,7 +23,7 @@ cd "$REPOROOT/src/dotnet-compile-fsc"
 
 RunCmd "dotnet" 'restore -v Information --no-cache --configfile "$REPOROOT\test\NuGet.Config"' 
 
-RunCmd "dotnet" "-v pack -C Release"
+RunCmd "dotnet" "-v pack -c Release"
 
 # run tests
 
