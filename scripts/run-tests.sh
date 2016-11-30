@@ -4,7 +4,7 @@ REPOROOT=$(dirname "$BASEDIR")
 
 # test helper
 
-function RunCmd
+RunCmd ()
 {
   echo "$1 $2"
   eval "$1 $2"
@@ -14,22 +14,22 @@ function RunCmd
   fi
 }
 
-function DotnetBuild
+DotnetBuild ()
 {
   RunCmd "dotnet" "--verbose build"
 }
 
-function DotnetRun
+DotnetRun ()
 {
   RunCmd "dotnet" "--verbose run $1"
 }
 
-function DotnetRestore
+DotnetRestore ()
 {
   RunCmd "dotnet" 'restore --no-cache --configfile "$REPOROOT/test/NuGet.Config"' 
 }
 
-function RunTest
+RunTest ()
 {
   echo "[TEST] '$1'..."
 }
