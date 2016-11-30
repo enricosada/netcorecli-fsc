@@ -34,12 +34,13 @@ RunTest "dotnet new"
 {
   rm -rf "$REPOROOT/test/test-dotnet-new"
 
-  mkdir "$REPOROOT/test/test-dotnet-new" -Force | cd
+  mkdir "$REPOROOT/test/test-dotnet-new"
+
+  cd "$REPOROOT/test/test-dotnet-new"
 
   RunCmd "dotnet" "new --lang f#"
 
   DotnetRestore
-  #RunCmd "dotnet" "restore"
 
   DotnetBuild
 
