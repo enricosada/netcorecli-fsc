@@ -175,4 +175,4 @@ export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
 
 echo "${args[@]}"
 
-sh "$REPOROOT/scripts/run-tests.sh"
+$REPOROOT/scripts/run-tests.sh
