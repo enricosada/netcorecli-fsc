@@ -1,0 +1,58 @@
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+
+  <PropertyGroup>
+    <VersionPrefix>1.0.0-beta</VersionPrefix>
+    <TargetFrameworks>net451;netstandard1.6</TargetFrameworks>
+    <AssemblyName>FSharp.NET.Sdk</AssemblyName>
+    <PackageTags>f#;sdk;fsharp;msbuild</PackageTags>
+    <PackageReleaseNotes>use Sdk attribute</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/dotnet/netcorecli-fsc</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/dotnet/netcorecli-fsc</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="FSharp.NET.Current.Sdk.targets">
+      <PackagePath>build/FSharp.NET.Current.Sdk.targets</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="FSharp.NET.Core.Sdk.targets">
+      <PackagePath>build/FSharp.NET.Core.Sdk.targets</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="FSharp.NET.Sdk.props">
+      <PackagePath>build/FSharp.NET.Sdk.props</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="FSharp.NET.CrossTargeting.Sdk.targets">
+      <PackagePath>buildCrossTargeting/FSharp.NET.CrossTargeting.Sdk.targets</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="Sdk\Sdk.targets">
+      <PackagePath>Sdk/Sdk.targets</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="Sdk\Sdk.OnRestore.targets">
+      <PackagePath>Sdk/Sdk.OnRestore.targets</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="Sdk\Sdk.props">
+      <PackagePath>Sdk/Sdk.props</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NETStandard.Library" Version="1.6">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.FSharp.Compiler.netcore" Version="1.0.0-beta-160629-fixed-3">
+      <PrivateAssets>Compile</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

@@ -19,6 +19,11 @@ this file.
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+    <!--<UsingTask TaskName="Fsc" AssemblyFile="$(MSBuildThisFileDirectory)\..\compiler\netstandard1.6\FSharp.Build.dll" />-->
+
+    <!--TODO error if FscTaskAssemblyPath is not defined-->
+    <UsingTask TaskName="Fsc" AssemblyFile="$(FscTaskAssemblyPath)" />
+
     <PropertyGroup>
         <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
         <DefaultLanguageSourceExtension>.fs</DefaultLanguageSourceExtension>
@@ -88,47 +93,65 @@ this file.
           Returns="@(FscCommandLineArgs)"
           DependsOnTargets="$(CoreCompileDependsOn)"
     >
+
         <PropertyGroup>
-            <_IntermediateOutputPathFull>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)'))</_IntermediateOutputPathFull>
-            <_TargetFrameworkDefine>$(TargetFramework.Replace('.','_').ToUpper())</_TargetFrameworkDefine>
+            <TargetProfile Condition=" '$(TargetFrameworkIdentifier)' == '.NETFramework' " >mscorlib</TargetProfile>
+            <TargetProfile Condition=" '$(TargetFrameworkIdentifier)' != '.NETFramework' " >netcore</TargetProfile>
+
+            <_OtherFscFlags>--simpleresolution --nocopyfsharpcore</_OtherFscFlags>
+            <!--HACK we need default.win32manifest for exe-->
+            <Win32Manifest Condition="'$(OutputType)' == 'Exe'" >$(FscToolPath)/../../../runtimes/any/native/default.win32manifest</Win32Manifest>
+
+            <!--additionalProbingPath must not end with directory separator, otherwise doesnt work-->
+            <_FscTask_DotnetFscCompilerPath_additionalProbingPath>$(NuGetPackageRoot.TrimEnd('\').TrimEnd('/'))</_FscTask_DotnetFscCompilerPath_additionalProbingPath>
+
+            <_FscTask_FscToolExe>dotnet.exe</_FscTask_FscToolExe>
+            <_FscTask_FscToolPath>$(MSBuildExtensionsPath)/../..</_FscTask_FscToolPath>
+            <_FscTask_DotnetFscCompilerPath> --additionalProbingPath $(_FscTask_DotnetFscCompilerPath_additionalProbingPath) "$(FscToolPath)/$(FscToolExe)"</_FscTask_DotnetFscCompilerPath>
         </PropertyGroup>
 
-        <!--STEP1 Create the dotnet-compile-fsc response file lines-->
-        <ItemGroup>
-            <DotnetCompileFscResponseLines Include="--temp-output:$(_IntermediateOutputPathFull)" />
-            <DotnetCompileFscResponseLines Include="--out:$(_IntermediateOutputPathFull)$(TargetName)$(TargetExt)" />
+        <Fsc  BaseAddress="$(BaseAddress)"
+              CodePage="$(CodePage)"
+              DebugSymbols="$(DebugSymbols)"
+              DebugType="$(DebugType)"
+              DefineConstants="$(DefineConstants)"
+              DisabledWarnings="$(NoWarn)"
+              DocumentationFile="$(DocumentationFile)"
+              EmbedAllSources="$(EmbedAllSources)"
+              Embed="$(Embed)"
+              GenerateInterfaceFile="$(GenerateInterfaceFile)"
+              KeyFile="$(KeyOriginatorFile)"
+              LCID="$(LCID)"
+              NoFramework="true"
+              Optimize="$(Optimize)"
+              OtherFlags="$(_OtherFscFlags) $(OtherFlags)"
+              OutputAssembly="@(IntermediateAssembly)"
+              PdbFile="$(PdbFile)"
+              Platform="$(PlatformTarget)"
+              Prefer32Bit="$(Actual32Bit)"
+              References="@(ReferencePath)"
+              ReferencePath="$(ReferencePath)"
+              Resources="@(_CoreCompileResourceInputs);@(CompiledLicenseFile);@(AdditionalEmbeddedResource)"
+              SourceLink="$(SourceLink)"
+              Sources="@(CompileBefore -> '%(FullPath)');@(Compile -> '%(FullPath)');@(CompileAfter -> '%(FullPath)')"
+              Tailcalls="$(Tailcalls)"
+              TargetType="$(OutputType)"
+              ToolExe="$(_FscTask_FscToolExe)"
+              ToolPath="$(_FscTask_FscToolPath)"
+              TreatWarningsAsErrors="$(TreatWarningsAsErrors)"
+              Utf8Output="$(Utf8Output)"
+              VersionFile="$(VersionFile)"
+              VisualStudioStyleErrors="$(VisualStudioStyleErrors)"
+              WarningLevel="$(WarningLevel)"
+              WarningsAsErrors="$(WarningsAsErrors)"
+              Win32ManifestFile="$(Win32Manifest)"
+              Win32ResourceFile="$(Win32Resource)"
+              SubsystemVersion="$(SubsystemVersion)"
+              HighEntropyVA="$(HighEntropyVA)"
+              TargetProfile="$(TargetProfile)"
+              DotnetFscCompilerPath="$(_FscTask_DotnetFscCompilerPath)"
+        />
 
-            <DotnetCompileFscResponseLines Condition="'$(OutputType)' == 'Exe'"  Include="--emit-entry-point:True" />
-
-            <!--DOC: $(DefineConstants) is a string separated by ';' so let's convert to array-->
-            <DefineConstantsArray Include="$(DefineConstants.Split(';'))" />
-            <DotnetCompileFscResponseLines Include="@(DefineConstantsArray -> '--define:%(Identity)')" />
-
-            <!--HACK: for compatibility with previous sdk-->
-            <DotnetCompileFscResponseLines Include="--define:$(_TargetFrameworkDefine)" />
-
-            <DotnetCompileFscResponseLines Include="--optimize:$(Optimize)" />
-            <DotnetCompileFscResponseLines Include="--debug-type:$(DebugType)" />
-            <DotnetCompileFscResponseLines Include="--output-name:$(TargetName)" />
-            <DotnetCompileFscResponseLines Include="--file-version:1.0.0.0" />
-            <DotnetCompileFscResponseLines Include="--version:1.0.0.0" />
-            <DotnetCompileFscResponseLines Include="--informational-version:1.0.0" />
-            <DotnetCompileFscResponseLines Include="--target-framework:$(NuGetTargetMoniker)" />
-
-            <DotnetCompileFscResponseLines Include="@(ReferencePath -> '--reference:%(FullPath)')" />
-
-            <DotnetCompileFscResponseLines Include="@(Compile -> '%(FullPath)')" />
-        </ItemGroup>
-
-        <!--STEP2 Create the dotnet-compile-fsc response file-->
-        <PropertyGroup>
-            <DotnetCompileFscResponseFilePath>$(_IntermediateOutputPathFull)dotnet-compile.rsp</DotnetCompileFscResponseFilePath>
-        </PropertyGroup>
-
-        <WriteLinesToFile File="$(DotnetCompileFscResponseFilePath)" Lines="@(DotnetCompileFscResponseLines)" Overwrite="True" />
-
-        <!--STEP3 HACK: invoke dotnet-compile-fsc because already works-->
-        <Exec Command="dotnet compile-fsc @$(DotnetCompileFscResponseFilePath)"/>
     </Target>
 
     <!--End Required Task by .Common.target-->
