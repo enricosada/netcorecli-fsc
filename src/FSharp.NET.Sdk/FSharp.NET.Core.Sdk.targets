@@ -10,7 +10,7 @@ WARNING:  You CAN MODIFY this file, doesnt matter if you are not knowledgeable a
 
 This file defines the steps in the standard build process specific for F# .NET projects.
 For example, it contains the step that actually calls the F# compiler. 
-Flow is: msbuild -> CoreCompile -> dotnet compile-fsc -> fsc
+Flow is: msbuild -> CoreCompile -> FscTask -> fsc compiler
 The remainder of the build process is defined in Microsoft.Common.targets, but is not imported by 
 this file.
 
@@ -18,8 +18,6 @@ this file.
 -->
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
-    <!--<UsingTask TaskName="Fsc" AssemblyFile="$(MSBuildThisFileDirectory)\..\compiler\netstandard1.6\FSharp.Build.dll" />-->
 
     <!--TODO error if FscTaskAssemblyPath is not defined-->
     <UsingTask TaskName="Fsc" AssemblyFile="$(FscTaskAssemblyPath)" />
