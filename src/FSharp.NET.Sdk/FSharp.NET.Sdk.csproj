@@ -42,15 +42,11 @@
     </Content>
   </ItemGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="NETStandard.Library" Version="1.6">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.FSharp.Compiler.netcore" Version="1.0.0-beta-160629-3">
+    <PackageReference Include="Microsoft.FSharp.Compiler.netcore" Version="1.0.0-rc-170111">
       <PrivateAssets>Compile</PrivateAssets>
     </PackageReference>
   </ItemGroup>

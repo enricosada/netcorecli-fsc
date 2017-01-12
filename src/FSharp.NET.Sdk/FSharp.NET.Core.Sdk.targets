@@ -98,14 +98,11 @@ this file.
 
             <_OtherFscFlags>--simpleresolution --nocopyfsharpcore</_OtherFscFlags>
             <!--HACK we need default.win32manifest for exe-->
-            <Win32Manifest Condition="'$(OutputType)' == 'Exe'" >$(FscToolPath)/../../../runtimes/any/native/default.win32manifest</Win32Manifest>
-
-            <!--additionalProbingPath must not end with directory separator, otherwise doesnt work-->
-            <_FscTask_DotnetFscCompilerPath_additionalProbingPath>$(NuGetPackageRoot.TrimEnd('\').TrimEnd('/'))</_FscTask_DotnetFscCompilerPath_additionalProbingPath>
+            <Win32Manifest Condition="'$(OutputType)' == 'Exe'" >$(FscToolPath)/../../runtimes/any/native/default.win32manifest</Win32Manifest>
 
             <_FscTask_FscToolExe>dotnet.exe</_FscTask_FscToolExe>
             <_FscTask_FscToolPath>$(MSBuildExtensionsPath)/../..</_FscTask_FscToolPath>
-            <_FscTask_DotnetFscCompilerPath> --additionalProbingPath $(_FscTask_DotnetFscCompilerPath_additionalProbingPath) "$(FscToolPath)/$(FscToolExe)"</_FscTask_DotnetFscCompilerPath>
+            <_FscTask_DotnetFscCompilerPath> "$(FscToolPath)/$(FscToolExe)"</_FscTask_DotnetFscCompilerPath>
         </PropertyGroup>
 
         <Fsc  BaseAddress="$(BaseAddress)"
