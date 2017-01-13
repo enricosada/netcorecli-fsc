@@ -99,10 +99,18 @@ this file.
             <_OtherFscFlags>--simpleresolution --nocopyfsharpcore</_OtherFscFlags>
             <!--HACK we need default.win32manifest for exe-->
             <Win32Manifest Condition="'$(OutputType)' == 'Exe'" >$(FscToolPath)/../../runtimes/any/native/default.win32manifest</Win32Manifest>
+        </PropertyGroup>
 
+        <PropertyGroup Condition=" '$(DontRunFscWithDotnet)' == '' ">
             <_FscTask_FscToolExe>dotnet.exe</_FscTask_FscToolExe>
             <_FscTask_FscToolPath>$(MSBuildExtensionsPath)/../..</_FscTask_FscToolPath>
             <_FscTask_DotnetFscCompilerPath> "$(FscToolPath)/$(FscToolExe)"</_FscTask_DotnetFscCompilerPath>
+        </PropertyGroup>
+
+        <PropertyGroup Condition=" '$(DontRunFscWithDotnet)' != '' "> <!-- check fsc extension? -->
+            <_FscTask_FscToolExe>$(FscToolExe)</_FscTask_FscToolExe>
+            <_FscTask_FscToolPath>$(FscToolPath)</_FscTask_FscToolPath>
+            <_FscTask_DotnetFscCompilerPath></_FscTask_DotnetFscCompilerPath>
         </PropertyGroup>
 
         <Fsc  BaseAddress="$(BaseAddress)"
