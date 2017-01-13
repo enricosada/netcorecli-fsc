@@ -46,7 +46,7 @@
     <PackageReference Include="NETStandard.Library" Version="1.6">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.FSharp.Compiler.netcore" Version="1.0.0-rc-170111">
+    <PackageReference Include="Microsoft.FSharp.Compiler.Sdk.netcore" Version="1.0.0-rc-170113">
       <PrivateAssets>Compile</PrivateAssets>
     </PackageReference>
   </ItemGroup>

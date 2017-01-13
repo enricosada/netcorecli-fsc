@@ -97,8 +97,6 @@ this file.
             <TargetProfile Condition=" '$(TargetFrameworkIdentifier)' != '.NETFramework' " >netcore</TargetProfile>
 
             <_OtherFscFlags>--simpleresolution --nocopyfsharpcore</_OtherFscFlags>
-            <!--HACK we need default.win32manifest for exe-->
-            <Win32Manifest Condition="'$(OutputType)' == 'Exe'" >$(FscToolPath)/../../runtimes/any/native/default.win32manifest</Win32Manifest>
         </PropertyGroup>
 
         <PropertyGroup Condition=" '$(DontRunFscWithDotnet)' == '' ">
