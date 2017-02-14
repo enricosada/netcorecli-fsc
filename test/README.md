@@ -1,6 +1,18 @@
 
 ## How to run tests suite
 
+The test suite will:
+
+- test the current `dotnet new` templates with new packages (to avoid regression)
+- test some scenarios, using new packages
+
+All tests will copy templates from `dotnet new` or `test/testAssets` in a temp directory
+for each test (so each test is isolated)
+
+The test suiteuse a local package cache (not the global one) in `test/packages`.
+The package cache is shared by tests, but is cleaned up from this repo packages if the build 
+script is used (so same package version can be reused for multiple runs).
+
 ### Using build script:
 
 From repo root, `build` will compile, package and run test.
