@@ -19,12 +19,10 @@ if($Help)
 #make path absolute
 $RepoRoot = "$PSScriptRoot"
 
-$sdkVersion = '1.0.1'
-
-function Install-DotnetSdk([string] $sdkVersion)
+function Install-DotnetSdk([string] $sdkVersion, [string] $sdkBranch)
 {
     Write-Host "# Install .NET Core Sdk versione '$sdkVersion'" -foregroundcolor "magenta"
-    $sdkInstallScriptUrl = "https://raw.githubusercontent.com/dotnet/cli/rel/1.0.0/scripts/obtain/dotnet-install.ps1"
+    $sdkInstallScriptUrl = "https://raw.githubusercontent.com/dotnet/cli/$sdkBranch/scripts/obtain/dotnet-install.ps1"
     $sdkInstallScriptPath = ".dotnetsdk\dotnet_cli_install.ps1"
     Write-Host "Downloading sdk install script '$sdkInstallScriptUrl' to '$sdkInstallScriptPath'"
     mkdir "$RepoRoot\.dotnetsdk" -Force | Out-Null
@@ -59,9 +57,13 @@ function Using-Sdk ([string] $sdkVersion)
 }
 
 # main
-Install-DotnetSdk $sdkVersion
 
-Using-Sdk $sdkVersion
+$sdkStable = '1.0.1'
+
+Install-DotnetSdk $sdkStable 'rel/1.0.0'
+Install-DotnetSdk '2.0.0-preview1-005899' 'release/2.0.0'
+
+Using-Sdk $sdkStable
 
 dotnet msbuild build.proj /m /v:diag /p:Architecture=$Architecture $ExtraParameters
 if ($LASTEXITCODE -ne 0) { throw "Failed to build" } 
